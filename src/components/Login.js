@@ -5,11 +5,7 @@ import { createAccount, signin, signout } from "../actions/firebase.action";
 
 import Backdrop from "@material-ui/core/Backdrop";
 import Button from "@material-ui/core/Button";
-import Fade from "@material-ui/core/Fade";
-import Grid from "@material-ui/core/Grid";
-import MenuItem from "@material-ui/core/MenuItem";
 import Modal from "@material-ui/core/Modal";
-import Select from "@material-ui/core/Select";
 import TextField from "@material-ui/core/TextField";
 
 class Login extends Component {
@@ -158,7 +154,7 @@ class Login extends Component {
               onClick={this.handleSubmit}
               className="submit-button"
             >
-              Submit
+              {this.state.createAccount ? "Create Account" : "Sign In"}
             </Button>
             {!this.state.createAccount ? (
               <Button
@@ -186,7 +182,7 @@ class Login extends Component {
                 onClick={this.close}
                 className="create-button"
               >
-                Return to Login
+                Return
               </Button>
             )}
           </div>

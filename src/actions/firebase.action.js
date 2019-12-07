@@ -12,10 +12,13 @@ import {
   CREATE_ACCOUNT_FAILURE,
   REQUEST_SIGN_IN,
   SIGN_IN_SUCCESS,
-  SIGN_IN_ERROR,
+  SIGN_IN_FAILURE,
   REQUEST_SIGN_OUT,
   SIGN_OUT_SUCCESS,
-  SIGN_OUT_FAILURE
+  SIGN_OUT_FAILURE,
+  REQUEST_UPDATE_FRIENDS_LIST,
+  UPDATE_FRIENDS_LIST_SUCCESS,
+  UPDATE_FRIENDS_LIST_ERROR
 } from "./types";
 
 var config = {
@@ -81,7 +84,7 @@ const createAccount = (email, password, name) => {
             dispatch({ type: SIGN_IN_SUCCESS, payload: myRes });
           })
           .catch(error => {
-            dispatch({ type: SIGN_IN_ERROR, error });
+            dispatch({ type: SIGN_IN_FAILURE, error });
           });
       })
       .catch(error => {
@@ -99,7 +102,7 @@ const signin = (email, password) => {
         dispatch({ type: SIGN_IN_SUCCESS, payload: res });
       })
       .catch(error => {
-        dispatch({ type: SIGN_IN_ERROR, error });
+        dispatch({ type: SIGN_IN_FAILURE, error });
       });
   };
 };
@@ -117,23 +120,25 @@ const signout = () => {
   };
 };
 
-// const updateUser = data => {
-//   const filtered = data.filter(item => item);
-//   return dispatch => {
-//     dispatch({ type: ADD_EXERCISE });
-//     firebase
-//       .database()
-//       .ref("/")
-//       .set(filtered)
-//       .then(() => {
-//         dispatch({ type: ADD_EXERCISE_SUCCESS, payload: filtered });
-//         alert("Exercise Added!");
-//       })
-//       .catch(error => {
-//         dispatch({ type: ADD_EXERCISE_ERROR });
-//       });
-//   };
-// };
+const updateFriendList = (data, uid, list) => {
+  let temp = data ? data : {};
+  temp[uid] = { list };
+
+  return dispatch => {
+    dispatch({ type: REQUEST_UPDATE_FRIENDS_LIST });
+    firebase
+      .database()
+      .ref("/")
+      .set(temp)
+      .then(() => {
+        dispatch({ type: UPDATE_FRIENDS_LIST_SUCCESS, payload: temp });
+        alert("Exercise Added!");
+      })
+      .catch(error => {
+        dispatch({ type: UPDATE_FRIENDS_LIST_ERROR });
+      });
+  };
+};
 
 export {
   initializeFirebase,
@@ -141,5 +146,6 @@ export {
   clearFirebase,
   createAccount,
   signin,
-  signout
+  signout,
+  updateFriendList
 };

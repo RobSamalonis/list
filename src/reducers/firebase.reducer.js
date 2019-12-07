@@ -11,10 +11,13 @@ import {
   CREATE_ACCOUNT_FAILURE,
   REQUEST_SIGN_IN,
   SIGN_IN_SUCCESS,
-  SIGN_IN_ERROR,
+  SIGN_IN_FAILURE,
   REQUEST_SIGN_OUT,
   SIGN_OUT_SUCCESS,
-  SIGN_OUT_FAILURE
+  SIGN_OUT_FAILURE,
+  REQUEST_UPDATE_FRIENDS_LIST,
+  UPDATE_FRIENDS_LIST_SUCCESS,
+  UPDATE_FRIENDS_LIST_ERROR
 } from "../actions/types";
 
 const initialState = { isFetching: false };
@@ -101,7 +104,23 @@ export default function articles(state = initialState, action) {
         isFetching: false
       });
     }
-    case SIGN_OUT_FAILURE: {
+    case SIGN_IN_FAILURE: {
+      return Object.assign({}, state, {
+        isFetching: false
+      });
+    }
+    case REQUEST_UPDATE_FRIENDS_LIST: {
+      return Object.assign({}, state, {
+        isFetching: true
+      });
+    }
+    case UPDATE_FRIENDS_LIST_SUCCESS: {
+      return Object.assign({}, state, {
+        db: action.payload,
+        isFetching: false
+      });
+    }
+    case UPDATE_FRIENDS_LIST_ERROR: {
       return Object.assign({}, state, {
         isFetching: false
       });

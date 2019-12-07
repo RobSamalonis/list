@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
+import AddFriendsList from "./components/AddFriendsList";
 import Login from "./components/Login";
 
 import { initializeFirebase } from "./actions/firebase.action";
@@ -32,20 +33,15 @@ class App extends Component {
     return (
       <div className="App">
         <Login />
-        {/* {this.state.auth && (
-          <Fade in={this.state.auth}>
+        {this.props.firebase && this.props.firebase.user && (
+          <Fade in={this.props.firebase.user}>
             <Grid className="grid" container>
               <Grid className="main" style={{ padding: "1em" }} item xs={12}>
-                <div className="menu-main">
-                  {(this.props.router.route === "Home" ||
-                    !this.props.router.route) && <GetLastWeightPage />}
-                  {this.props.router.route === "Profile" && <Profile />}
-                </div>
+                <AddFriendsList />
               </Grid>
-              <Footer />
             </Grid>
           </Fade>
-        )} */}
+        )}
       </div>
     );
   }
