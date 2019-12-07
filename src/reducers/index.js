@@ -1,5 +1,5 @@
 import { combineReducers } from "redux";
-import firebase from "./baseAction.reducer";
+import firebase from "./firebase.reducer";
 
 const rootReducer = combineReducers({ firebase });
 
